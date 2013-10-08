@@ -1,0 +1,4 @@
+[http]
+	proxy = http://plgw.hq.kishou.go.jp:8090/
+[https]
+	proxy = http://plgw.hq.kishou.go.jp:8090/

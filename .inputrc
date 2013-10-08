@@ -1,0 +1,50 @@
+
+set input-meta on
+set output-meta on
+set convert-meta off
+set kanji-code sjis
+set show-all-if-ambiguous on
+set mark-symlinked-directories on
+set history-preserve-point on
+set byte-oriented off
+set enable-keypad on
+
+"\ep": history-search-backward
+"\en": history-search-forward
+
+"\e[3~": delete-char
+# this is actually equivalent to "\C-?": delete-char
+
+# VT
+"\e[1~": beginning-of-line
+"\e[4~": end-of-line
+
+# kvt
+"\e[H":beginning-of-line
+"\e[F":end-of-line
+
+# rxvt and konsole (i.e. the KDE-app...)
+"\e[7~":beginning-of-line
+"\e[8~":end-of-line
+
+$if mode=emacs
+
+# for linux console and RH/Debian xterm
+"\e[1~": beginning-of-line
+"\e[4~": end-of-line
+"\e[5~": beginning-of-history
+"\e[6~": end-of-history
+"\e[3~": delete-char
+"\e[2~": quoted-insert
+
+# for rxvt
+"\e[8~": end-of-line
+
+# for non RH/Debian xterm, can't hurt for RH/DEbian xterm
+"\eOH": beginning-of-line
+"\eOF": end-of-line
+
+# for freebsd console
+"\e[H": beginning-of-line
+"\e[F": end-of-line
+$endif

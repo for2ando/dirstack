@@ -1,0 +1,10 @@
+!Rxvt.geometry: 80x42+16+60
+Rxvt.geometry: 80x36+192+16
+Rxvt.font: msgothic-14
+Rxvt.mfont: msgothic-14-jisx0208
+Rxvt.multichar_encoding: sjis
+Rxvt.visualBell: True
+Rxvt.saveLines: 32767
+Rxvt.scrollBar_right: True
+Rxvt.background: LightYellow
+Emacs.geometry: 80x30+100+100
