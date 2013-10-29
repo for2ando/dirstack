@@ -1,14 +1,16 @@
-# .environ
-export environ=1
-#export PATH; PATH=$PATH:$HOME/bin # set at user environment on sysdm.cpl
-#export CVSROOT; CVSROOT=:pserver:JMA1450@jslsv02:d:\\cvsroot
-export CVSROOT; CVSROOT=/x/cvsroot
+#echo [.environ]
+# common settings between .xsession and .profile (and .bash_profile)
 
-#export MANPATH; MANPATH="~/man:$MANPATH"
-#export INFOPATH; INFOPATH="~/info:$INFOPATH"
-#export BASH_ENV; BASH_ENV=$HOME/.bashrc
-#export LESSOPEN
-#export GDK_CONV=/usr/share/gtk/menu
+. /etc/profile.d/environ.sh
 
-export http_proxy; http_proxy=http://plgw.hq.kishou.go.jp:8090/
-export ftp_proxy; ftp_proxy=http://plgw.hq.kishou.go.jp:8090/
+## on-time evaluation begins
+test "$environ" || {
+export environ; environ=1
+
+[ "$TERM" = ansisys ] && TERM=cygwin	# for cmd ?
+export MAKE_MODE; MAKE_MODE=unix
+export SHELL
+# Any other envvars are set in Windows' "System's Property" dialog.
+
+}
+# end of one time evaluation
