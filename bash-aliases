@@ -1,0 +1,10 @@
+for i in `seq 1 48`
+do
+  alias p$i="pushd -$((i-1))"
+  alias n$i="pushd +$i"
+done
+alias d='dirs -v'
+alias pushd='pushd >/dev/null'
+alias popd='popd >/dev/null'
+alias p='pushd -0'
+alias n='pushd +1'
