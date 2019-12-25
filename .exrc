@@ -9,3 +9,4 @@ map! OA lki
 map! OB lji
 map! OC lli
 map! OD lhi
+map ; :

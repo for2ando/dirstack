@@ -7,6 +7,10 @@
 test "$environ" || {
 export environ; environ=1
 
+if [ -d "$HOME/bin" ] ; then
+  PATH="$HOME/bin:$PATH"
+fi
+
 [ "$TERM" = ansisys ] && TERM=cygwin	# for cmd ?
 export MAKE_MODE; MAKE_MODE=unix
 export SHELL

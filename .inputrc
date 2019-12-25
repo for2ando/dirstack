@@ -1,7 +1,7 @@
 set byte-oriented off
 set convert-meta off
 set input-meta on
-set kanji-code sjis
+#set kanji-code sjis
 set mark-symlinked-directories on
 set output-meta on
 set show-all-if-ambiguous on

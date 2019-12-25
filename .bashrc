@@ -1,111 +1,119 @@
-#echo [.bashrc]
+# ~/.bashrc: executed by bash(1) for non-login shells.
+# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
+# for examples
 
-. /etc/bashrc
+# If not running interactively, don't do anything
+case $- in
+    *i*) ;;
+      *) return;;
+esac
+
+#. /etc/bash.bashrc
 . $HOME/.environ
-
 test "$BOW" && SHELL=$BASH
-PS1='//\u@\h\w\$ '
 
-# aliases
-for i in `seq 1 16`
-do
-  alias f$i="fg %$i"
-  alias b$i="bg %$i"
-  alias d$i="pushd +$i"
-done
-alias h='history'
-alias j='jobs -l'
-alias d='dirs -v'
-alias ls='ls --show-control-chars'
-alias ll='ls -l'
-alias la='ls -A'
-alias lla='ls -lA'
-alias pushd='pushd >/dev/null'
-alias popd='popd >/dev/null'
-alias nsl='nslookup'
-alias fsb='fastboot'
-alias heimdall='/c/winap/heimdall-suite-1.4.0/heimdall.exe'
-alias cdl='cd `cds -r`'
-#alias less='jless'
-#alias lesskey='jlesskey'
-#alias man='jman'
-#alias cman='/usr/bin/man'
-#alias ncftp='ncftp3'
-#alias a2ps='a2ps-j -p -ns'
-alias xd='od -A x -t x1'
-#alias xd='hexdump -e '\''"%07.7_ax  " 16/1 "%02x " "\n" "%07.7_Ax\n"'\'
-#alias xdc='hexdump -e '\''"%07.7_ax  " 16/1 "%_u " "\n" "%07.7_Ax\n"'\'
-alias bdf='df'
-#alias latex='jlatex'
-#alias st='mst -q'
-#alias uum='/usr/local/bin/Wnn4/uum'
-#alias smbstat='smbstatus -s /etc/smb.conf'
-alias wlan2='wifi connect wifi0 w2a_nomap'
-alias wlan3='wifi connect wifi0 wlan3'
-alias wlan4='wifi connect wifi0 wlan4'
-alias wlan5='wifi connect wifi0 w5_nomap'
-alias wlan6='wifi connect wifi0 wlan6'
-alias wlan7='wifi connect wifi0 w7_nomap'
-alias wlan8='wifi connect wifi0 w8_nomap'
-alias wlan9='wifi connect wifi0 w9_nomap'
-alias wlana='wifi connect wifi0 wa_nomap'
-alias wlanb='wifi connect wifi0 wb_nomap'
-alias wlanc='wifi connect wifi0 wc_nomap'
-alias wfon='wifi connect wifi0 FON'
-alias wlanany='wifi connect wifi0'
-alias wlanoff='wifi connect wifi0'
-alias emnet0='rasdial emnet0'
-alias dialoff='rasdial /disc'
-alias adbsysrw='adb shell mount -o remount,rw /dev/block/mmcblk0p1 /system'
-alias adbsysro='adb shell mount -o remount,ro /dev/block/mmcblk0p1 /system'
-alias prerootrw='ssh 192.168.2.3 -l root mount -o remount,rw /'
-alias prerootro='ssh 192.168.2.3 -l root mount -o remount,ro /'
+# don't put duplicate lines or lines starting with space in the history.
+# See bash(1) for more options
+HISTCONTROL=ignoreboth
 
-for i in pc1 pc2 npc2 pc3 wpc3 pc4 pc5 wpc5 pc6 pc7 npc8; do
-  alias $i="ssh $i"
-done
-for i in 1 3 4 6 7; do
-  alias $i="pc$i"
-done
-alias 2='npc2'
-alias 8='npc8'
-alias 5='wpc5'
+# append to the history file, don't overwrite it
+shopt -s histappend
 
-# for BOW only
-[ -n "$BOW" ] && {
-  alias dos_lha=/dfs/c/bin/lha.exe
-  alias mule=mule2
-  alias ps='/bow/bowps.exe &'
-  alias minimize='stty rows 0 columns 0'
-  alias maximize='stty rows -1 columns -1'
-  alias resize='stty rows -2 columns -2'
-}
+# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+HISTSIZE=1000
+HISTFILESIZE=2000
 
-# for cygwin only
-[ "$OSTYPE" = cygwin ] && {
-  alias start='cygstart'
-  alias xcacls='cscript c:\\winap\\bin\\xcacls.vbs'
-  alias nvt='run /usr/local/bin/rxvt -e /bin/bash --login'
-  #alias less='/usr/local/bin/less'
-  #alias lessecho='/usr/local/bin/lessecho'
-  #alias lesskey='/usr/local/bin/lesskey'
-  alias lscpl='(cd /c/WINDOWS/system32; ls *.cpl)'
-  alias lsmsc='(cd /c/WINDOWS/system32; ls *.msc)'
-  alias hotplug='rundll32.exe shell32.dll,Control_RunDLL hotplug.dll &'
-  alias xalan='java org.apache.xalan.xslt.Process'
-  alias hv='xcygstart 1 /c/Program\ Files/HIDEMARU/Hidemaru.exe /r'
-  alias hm='xcygstart /c/Program\ Files/HIDEMARU/Hidemaru.exe'
-  alias hme='xcygstart 1 /c/Program\ Files/HIDEMARU/Hidemaru.exe /fe'
-  alias hmj='xcygstart 1 /c/Program\ Files/HIDEMARU/Hidemaru.exe /fj'
-  alias hms='xcygstart 1 /c/Program\ Files/HIDEMARU/Hidemaru.exe /fs'
-  alias hmu='xcygstart 1 /c/Program\ Files/HIDEMARU/Hidemaru.exe /fu'
-  alias hmub='xcygstart 1 /c/Program\ Files/HIDEMARU/Hidemaru.exe /fub'
-  alias hmu8='xcygstart 1 /c/Program\ Files/HIDEMARU/Hidemaru.exe /fu8'
-  alias lhmelt='xcygstart /c/Program\ Files/LHMELT/LHMELT.EXE'
-  alias psh='powershell'
-  alias cmv='cygstart /c/Program\ Files/BUFFALO/clientmgrv/bin/cmvMain.exe'
-  alias wping='/c/Windows/System32/PING.EXE'
-  alias sysprop='cygstart /c/windows/system32/SystemPropertiesAdvanced.exe'
-}
+# check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
+shopt -s checkwinsize
 
-unset i
+# If set, the pattern "**" used in a pathname expansion context will
+# match all files and zero or more directories and subdirectories.
+#shopt -s globstar
+
+# make less more friendly for non-text input files, see lesspipe(1)
+#[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+
+# set variable identifying the chroot you work in (used in the prompt below)
+if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
+    debian_chroot=$(cat /etc/debian_chroot)
+fi
+
+# set a fancy prompt (non-color, unless we know we "want" color)
+case "$TERM" in
+    xterm-color|*-256color) color_prompt=yes;;
+esac
+
+# uncomment for a colored prompt, if the terminal has the capability; turned
+# off by default to not distract the user: the focus in a terminal window
+# should be on the output of commands, not on the prompt
+#force_color_prompt=yes
+
+if [ -n "$force_color_prompt" ]; then
+    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
+	# We have color support; assume it's compliant with Ecma-48
+	# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
+	# a case would tend to support setf rather than setaf.)
+	color_prompt=yes
+    else
+	color_prompt=
+    fi
+fi
+
+if [ "$OSTYPE" = cygwin ]; then
+  PS1='//\u@\h\w\$ '
+elif [ "$color_prompt" = yes ]; then
+  PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+else
+  PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+fi
+unset color_prompt force_color_prompt
+
+# If this is an xterm set the title to user@host:dir
+case "$TERM" in
+xterm*|rxvt*)
+    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
+    ;;
+*)
+    ;;
+esac
+
+# enable color support of ls and also add handy aliases
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+    #alias dir='dir --color=auto'
+    #alias vdir='vdir --color=auto'
+
+    #alias grep='grep --color=auto'
+    #alias fgrep='fgrep --color=auto'
+    #alias egrep='egrep --color=auto'
+fi
+
+# colored GCC warnings and errors
+#export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+
+# some more ls aliases
+#alias ll='ls -l'
+#alias la='ls -A'
+#alias l='ls -CF'
+
+# Alias definitions.
+# You may want to put all your additions into a separate file like
+# ~/.bash_aliases, instead of adding them here directly.
+# See /usr/share/doc/bash-doc/examples in the bash-doc package.
+
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
+fi
+
+# enable programmable completion features (you don't need to enable
+# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
+# sources /etc/bash.bashrc).
+if ! shopt -oq posix; then
+  if [ -f /usr/share/bash-completion/bash_completion ]; then
+    . /usr/share/bash-completion/bash_completion
+  elif [ -f /etc/bash_completion ]; then
+    . /etc/bash_completion
+  fi
+fi
