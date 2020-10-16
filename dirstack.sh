@@ -1,8 +1,11 @@
 ## dirsave/dirload command library
 ## usage: source dirsave.sh
 
+export DIRSTACKFILE
+DIRSTACKFILE="$HOME/.dirstack"
+
 dirsave() {
-  dirs -p -l >$HOME/.dirstack
+  dirs -p -l >"$DIRSTACKFILE"
 }
 
 dirload() {
@@ -15,5 +18,5 @@ dirload() {
       pushd "$dir" >/dev/null
       pushd +1 >/dev/null
     done
-  } <$HOME/.dirstack
+  } <"$DIRSTACKFILE"
 }
