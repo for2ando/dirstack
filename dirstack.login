@@ -1,4 +1,4 @@
-#echo [.bash_profile]
+# .bash_profile
 
 . $HOME/lib/dirstack.sh
 dirload
