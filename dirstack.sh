@@ -1,8 +1,5 @@
-## dirsave/dirload command library
-## usage: source dirsave.sh
-
-export DIRSTACKFILE
-DIRSTACKFILE="$HOME/.dirstack"
+## A dirstack command library for bash
+## usage: source dirstack.sh
 
 dirsave() {
   dirs -p -l >"$DIRSTACKFILE"

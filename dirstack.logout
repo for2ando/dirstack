@@ -1,3 +1,4 @@
 # .bash_logout
 
-dirsave
+test -n "$DIRSTACKFILE" && dirsave
+unset DIRSTACKFILE

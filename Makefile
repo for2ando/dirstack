@@ -5,10 +5,8 @@ CMDS = help install
 INSTALL = install -pCSv
 LIBFILES = dirstack.sh
 LIBDIR = $(HOME)/lib
-LOGINFILES = dirstack.login
-LOGINDIR = $(HOME)/.bash_profile.d
-LOGOUTFILES = dirstack.logout
-LOGOUTDIR = $(HOME)/.bash_logout.d
+INITFILES = dirstack.login dirstack.logout
+INITDIR = $(HOME)/lib/init.d
 RCFILES = dirstack.aliases
 RCDIR = $(HOME)/.bashrc.d
 
@@ -18,6 +16,7 @@ help:
 
 install:
 	install -d $(LIBDIR) && $(INSTALL) $(LIBFILES) $(LIBDIR)
-	install -d $(LOGINDIR) && $(INSTALL) $(LOGINFILES) $(LOGINDIR)
-	install -d $(LOGOUTDIR) && $(INSTALL) $(LOGOUTFILES) $(LOGOUTDIR)
 	install -d $(RCDIR) && $(INSTALL) $(RCFILES) $(RCDIR)
+	install -d $(INITDIR) && $(INSTALL) $(INITFILES) $(INITDIR)
+	ln -sf $(INITDIR)/dirstack.login $(HOME)/.bash_profile.d/90dirstack.login
+	ln -sf $(INITDIR)/dirstack.logout $(HOME)/.bash_logout.d/10dirstack.logout
