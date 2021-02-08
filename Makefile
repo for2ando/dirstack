@@ -1,9 +1,11 @@
 ## Makefile for shell-sessions
-
-CMDS = help install
-.PHONY: $(CMDS)
+OS := $(shell { uname -o 2>/dev/null || uname -s; } | tr A-Z a-z)
 MKDIR = install -d
-INSTALL = install -pCSv
+ifneq (, $(filter darwin% %bsd,$(OS)))
+  INSTALL = install -pCSv
+else
+  INSTALL = install -Cv
+endif
 LIBFILES = dirstack.sh
 LIBDIR = $(HOME)/lib
 INITFILES = dirstack.login dirstack.logout
@@ -12,6 +14,9 @@ BASHLOGINDIR = $(HOME)/.bash_profile.d
 BASHLOGOUTDIR = $(HOME)/.bash_logout.d
 RCFILES = dirstack.aliases
 RCDIR = $(HOME)/.bashrc.d
+
+CMDS = help install
+.PHONY: $(CMDS)
 
 help:
 	@echo "usage:"
