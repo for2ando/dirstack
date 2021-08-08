@@ -30,16 +30,23 @@ _help:
 	@$(foreach i,$(MAKECMDS),echo "  make $i";)
 	@echo "See Makefile about functions of each commands."
 
-install:
-	@$(MKDIR) $(LIBDIR) && $(INSTALL) $(LIBFILES) $(LIBDIR)
-	@$(MKDIR) $(RCDIR) && $(INSTALL) $(RCFILES) $(RCDIR)
-	@$(MKDIR) $(INITDIR) && $(INSTALL) $(INITFILES) $(INITDIR)
+install: install-lib install-rc install-init install-bashlogin install-bashlogout
+
+install-lib install-rc install-init::
+	$(eval dest := $(call uppercase,$(patsubst install-%,%,$@)))
+	$(eval dir := $$($(dest)DIR))
+	$(eval files := $$($(dest)FILES))
+	@$(MKDIR) $(dir) && $(INSTALL) $(files) $(dir)
+
+install-bashlogin::
 	@$(MKDIR) $(BASHLOGINDIR) && \
 	  ln -sfv $(INITDIR)/dirstack.login $(BASHLOGINDIR)/90dirstack.login
+
+install-bashlogout::
 	@$(MKDIR) $(BASHLOGOUTDIR) && \
 	  ln -sfv $(INITDIR)/dirstack.logout $(BASHLOGOUTDIR)/10dirstack.logout
 
-diff:
+diff diff-lib diff-rc diff-init diff-bashlogin diff-bashlogout:
 	@$(MAKE) --no-print-directory _$@ | $(XPAGER)
 
 _diff: _diff-lib _diff-rc _diff-init _diff-bashlogin _diff-bashlogout
