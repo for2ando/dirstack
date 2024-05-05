@@ -2,7 +2,7 @@
 
 . $HOME/lib/dirstack.sh
 
-test -z "$DIRSTACKFILE" && DIRSTACKFILE="$HOME/.dirstack"
+test -z "$DIRSTACKFILE" && DIRSTACKFILE="$HOME/.dirstack$TTYN"
 export DIRSTACKFILE
 
 dirload
