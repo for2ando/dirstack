@@ -23,10 +23,15 @@ LIBFILES = dirstack.sh
 LIBDIR = $(HOME)/lib
 INITFILES = dirstack.login dirstack.logout
 INITDIR = $(HOME)/lib/init.d
+LOGIN_PRIOLITY = 90
+LOGIN_PRIOLITY_LEGACY = 90
+LOGOUT_PRIOLITY = 10
+LOGOUT_PRIOLITY_LEGACY = 10
 BASHLOGINDIR = $(HOME)/.bash_profile.d
 BASHLOGOUTDIR = $(HOME)/.bash_logout.d
-RCFILES = dirstack.aliases
-RCDIR = $(HOME)/.bashrc.d
+BASHRCFILES = dirstack.aliases
+BASHRCDIR = $(HOME)/.bashrc.d
+BASHEXITRCDIR = $(HOME)/.bashexitrc.d
 MAKECMDS = help install diff
 
 .PHONY: $(CMDS)
@@ -39,21 +44,29 @@ _help:
 	@$(foreach i,$(MAKECMDS),echo "  make $i";)
 	@echo "See Makefile about functions of each commands."
 
-install: install-lib install-rc install-init install-bashlogin install-bashlogout
+install: install-lib install-init remove-bashlogin install-bashrc remove-bashlogout install-bashexitrc
 
-install-lib install-rc install-init::
+install-lib install-init::
 	$(eval dest := $(call uppercase,$(patsubst install-%,%,$@)))
 	$(eval dir := $$($(dest)DIR))
 	$(eval files := $$($(dest)FILES))
 	@$(MKDIR) $(dir) && $(INSTALL) $(files) $(dir)
 
-install-bashlogin::
-	@$(MKDIR) $(BASHLOGINDIR) && \
-	  ln -sfv $(INITDIR)/dirstack.login $(BASHLOGINDIR)/90dirstack.login
+remove-bashlogin::
+	rm -f $(addprefix $(BASHLOGINDIR)/,$(addsuffix dirstack.login,$(LOGIN_PRIOLITY_LEGACY)))
 
-install-bashlogout::
-	@$(MKDIR) $(BASHLOGOUTDIR) && \
-	  ln -sfv $(INITDIR)/dirstack.logout $(BASHLOGOUTDIR)/10dirstack.logout
+install-bashrc::
+	@$(MKDIR) $(BASHRCDIR) && { \
+	  ln -sfv $(INITDIR)/dirstack.login $(BASHRCDIR)/$(LOGIN_PRIOLITY)dirstack.login; \
+	  $(INSTALL) $(BASHRCFILES) $(BASHRCDIR); \
+	}
+
+remove-bashlogout::
+	rm -f $(addprefix $(BASHLOGOUTDIR)/,$(addsuffix dirstack.logout,$(LOGOUT_PRIOLITY_LEGACY)))
+
+install-bashexitrc::
+	@$(MKDIR) $(BASHEXITRCDIR) && \
+	  ln -sfv $(INITDIR)/dirstack.logout $(BASHEXITRCDIR)/$(LOGOUT_PRIOLITY)dirstack.logout
 
 diff diff-lib diff-rc diff-init diff-bashlogin diff-bashlogout:
 	@$(MAKE) --no-print-directory _$@ | $(XPAGER)
